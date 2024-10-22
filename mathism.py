@@ -1,3 +1,5 @@
+from math import exp, log
+
 def transpose(A: list[list[float] | list[int]])->list[list[float | int]]:
     """Returns the transpose of the provided matrix"""
     transposed = [list(i) for i in zip(*A)]
@@ -84,3 +86,23 @@ def mat_mul(A: list[list[float|int]], B: list[list[float|int]])->list[list[float
     return [[sum(a * b for a, b in zip(A_row, B_col)) 
             for B_col in zip(*B)] 
             for A_row in A]
+
+def sigmoid(z:list[int|float] | int|float)->list[int|float] | int|float:
+        # Implement sigmoid function
+        # To avoid overflow, we clip z values
+        if isinstance(z, list):
+            return [1 / (1 + exp(-min(max(val, -500), 500))) for val in z]
+        return 1 / (1 + exp(-min(max(z, -500), 500)))
+
+def binaryCrossEntropyLoss( y_true: list[float | int], y_pred: list[float]):
+        m = len(y_true)
+        epsilon = 1e-15  # Small constant to avoid log(0)
+        
+        # Clip predictions to avoid numerical instability
+        y_pred = [max(min(p, 1 - epsilon), epsilon) for p in y_pred]
+        
+        # Calculate binary cross entropy
+        return -(1/m) * sum(
+            y_true[i] * log(y_pred[i]) + (1 - y_true[i]) * log(1 - y_pred[i])
+            for i in range(m)
+        )
