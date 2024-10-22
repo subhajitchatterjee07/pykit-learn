@@ -79,7 +79,7 @@ def matrix_inverse(A: list[list[float|int]])->list[list[float|int]]:
     return inv_A
 
 
-def matmul(A: list[list[float|int]], B: list[list[float|int]])->list[list[float|int]]:
+def mat_mul(A: list[list[float|int]], B: list[list[float|int]])->list[list[float|int]]:
     """Matrix multiplication implementation"""
     return [[sum(a * b for a, b in zip(A_row, B_col)) 
             for B_col in zip(*B)] 
